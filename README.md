@@ -1,2 +1,3 @@
 # react-study-v6
-Created with CodeSandbox
+
+- atomic design
