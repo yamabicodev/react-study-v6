@@ -1,4 +1,11 @@
+// import { useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+// react hooks版
+// import { UserContext } from "../../providers/UserProvider";
+import { userState } from "../../store/userState";
+import { SecondaryButton } from "../atoms/button/SecondaryButton";
 import { SearchInput } from "../molecules/SearchInput";
 import { UserCard } from "../organisms/UserCard";
 
@@ -17,10 +24,21 @@ const users = [...Array(10).keys()].map((val) => {
 });
 
 export const Users = () => {
+  // stateのバケツリレーが不要となる。
+  // const { state } = useLocation();
+
+  // react hooks版
+  // const { userInfo, setUserInfo } = useContext(UserContext);
+
+  // recoil版
+  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const onClickSwith = () => setUserInfo({ isAdmin: !userInfo.isAdmin });
   return (
     <SContainer>
       <h2>ユーザー一覧</h2>
       <SearchInput />
+      <br />
+      <SecondaryButton onClick={onClickSwith}>権限切り替え</SecondaryButton>
       <SUserArea>
         {users.map((user) => {
           return <UserCard key={user.id} user={user} />;
